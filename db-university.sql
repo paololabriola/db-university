@@ -55,13 +55,13 @@ CREATE TABLE insegnanti(
 	PRIMARY KEY (`id`)
 
 );
--- Aggiunta colonne foreign key
+-- aggiunta colonne foreign key
 ALTER TABLE studenti ADD COLUMN id_corso_di_laurea INT NOT NULL;
 ALTER TABLE corsi_di_laurea ADD COLUMN id_dipartimento INT NOT NULL;
 
 ALTER TABLE studenti ADD FOREIGN KEY(id_corso_di_laurea) REFERENCES corsi_di_laurea(id);
 ALTER TABLE corsi_di_laurea ADD FOREIGN KEY(id_dipartimento) REFERENCES dipartimenti(id);
--- Creazione tabella ponte tra corsi e corsi di laurea per il collegamento many-to-many
+-- creazione tabella ponte tra corsi e corsi di laurea per il collegamento many-to-many
 CREATE TABLE corsi_di_laurea_corsi(
 
 	id_corsi_di_laurea INT NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE corsi_di_laurea_corsi(
 	FOREIGN KEY (id_corsi) REFERENCES corsi(id)
 
 );
--- Creazione tabella ponte tra insegnanti e corsi per il collegamento many-to-many
+-- creazione tabella ponte tra insegnanti e corsi per il collegamento many-to-many
 CREATE TABLE insegnanti_corsi(
 
 	id_insegnanti INT NOT NULL,
@@ -79,3 +79,27 @@ CREATE TABLE insegnanti_corsi(
 	FOREIGN KEY (id_corsi) REFERENCES corsi(id)
 
 );
+-- inserimento dati
+INSERT INTO university.dipartimenti
+(nome, indirizzo, direttore)
+VALUES('Dipartimento di Ingegneria', 'piazzale Tecchio', 'Bob');
+
+INSERT INTO university.corsi_di_laurea
+(nome, sede, classe, id_dipartimento)
+VALUES('Ingegneria informatica', 'San Giovanni', 'Ml-01', 1);
+
+INSERT INTO university.corsi
+(nome, ore_previste)
+VALUES('Analisi', 25);
+
+INSERT INTO university.corsi 
+(nome, ore_previste)
+VALUES('Fisica', 25);
+
+INSERT INTO university.corsi_di_laurea_corsi
+(id_corsi_di_laurea, id_corsi)
+VALUES(1, 1);
+
+INSERT INTO university.corsi_di_laurea_corsi
+(id_corsi_di_laurea, id_corsi)
+VALUES(1, 2);
